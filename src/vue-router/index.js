@@ -19,7 +19,9 @@ class VueRouter {
         break
     }
   }
-
+  match(location) {
+    return this.matcher.match(location)
+  }
   init(app) {
     const history = this.history
 
@@ -27,6 +29,11 @@ class VueRouter {
       history.setupListener()
     }
     history.transitionTo(history.getCurrentLocation(), setupHashListener)
+
+    history.listen((route) => {
+      app._route = route
+      console.log(app._route)
+    })
   }
 }
 

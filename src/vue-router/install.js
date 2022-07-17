@@ -10,6 +10,9 @@ export default function install(Vue, install) {
         this._router = this.$options.router
 
         this._router.init(this)
+
+        Vue.util.defineReactive(this, '_route', this._router.history.current)
+        console.log('this >>> ', this._route)
       } else {
         this._routerRoot = this.$parent && this.$parent._routerRoot
       }
