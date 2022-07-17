@@ -10,19 +10,24 @@ class VueRouter {
     const mode = options.mode || 'hash'
     switch (mode) {
       case 'hash':
-        this.history = new HashHistory()
+        this.history = new HashHistory(this)
         break
       case 'history':
-        this.history = new BrowserHistory()
+        this.history = new BrowserHistory(this)
         break
       default:
         break
     }
-
-    console.log(this.history)
   }
 
-  init(app) {}
+  init(app) {
+    const history = this.history
+
+    const setupHashListener = () => {
+      history.setupListener()
+    }
+    history.transitionTo(history.getCurrentLocation(), setupHashListener)
+  }
 }
 
 VueRouter.install = install

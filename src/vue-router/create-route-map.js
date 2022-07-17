@@ -2,7 +2,6 @@ export default function createRouteMap(routes, oldPathMap) {
   const pathMap = oldPathMap || Object.create(null)
 
   routes.forEach((route) => {
-    console.log(route)
     addRouteRecord(route, pathMap)
   })
 
