@@ -21,6 +21,11 @@ class HashHistory extends History {
   getCurrentLocation() {
     return getHash()
   }
+  push(location) {
+    this.transitionTo(location, () => {
+      window.location.hash = location
+    })
+  }
   setupListener() {
     window.addEventListener('hashchange', () => {
       this.transitionTo(getHash())

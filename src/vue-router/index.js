@@ -22,6 +22,10 @@ class VueRouter {
   match(location) {
     return this.matcher.match(location)
   }
+  push(to) {
+    this.history.push(to)
+  }
+  go() {}
   init(app) {
     const history = this.history
 
@@ -32,7 +36,6 @@ class VueRouter {
 
     history.listen((route) => {
       app._route = route
-      console.log(app._route)
     })
   }
 }
