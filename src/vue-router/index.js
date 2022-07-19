@@ -18,6 +18,8 @@ class VueRouter {
       default:
         break
     }
+
+    this.beforeHooks = []
   }
   match(location) {
     return this.matcher.match(location)
@@ -37,6 +39,9 @@ class VueRouter {
     history.listen((route) => {
       app._route = route
     })
+  }
+  beforeEach(fn) {
+    this.beforeHooks.push(fn)
   }
 }
 

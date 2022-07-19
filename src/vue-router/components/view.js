@@ -2,7 +2,6 @@ export default {
   name: 'RouterView',
   functional: true,
   render(h, { parent, data }) {
-    debugger
     const route = parent.$route
 
     let depth = 0

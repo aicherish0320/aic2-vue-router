@@ -14,6 +14,19 @@ export function createRoute(record, location) {
   }
 }
 
+function runQueue(queue, iterator, cb) {
+  function step(index) {
+    if (index >= queue.length) return cb()
+
+    const hook = queue[index]
+    iterator(hook, () => {
+      step(index + 1)
+    })
+  }
+
+  step(0)
+}
+
 export class History {
   constructor(router) {
     this.router = router
@@ -31,9 +44,20 @@ export class History {
     ) {
       return
     }
-    this.updateRoute(route)
 
-    onComplete && onComplete()
+    // 在更新之前先调用注册好的导航守卫
+    const queue = [].concat(this.router.beforeHooks)
+
+    const iterator = (hook, next) => {
+      hook(this.current, route, () => {
+        next()
+      })
+    }
+    runQueue(queue, iterator, () => {
+      this.updateRoute(route)
+
+      onComplete && onComplete()
+    })
   }
   updateRoute(route) {
     this.current = route
